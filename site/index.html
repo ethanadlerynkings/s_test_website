@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexten — Digital Agency</title>
+<meta name="description" content="Nexten helps businesses grow through websites, mobile apps, marketing, SEO, automation, and innovative technology solutions.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23c8f02d'/%3E%3Cpath d='M11 23V9h6a4 4 0 0 1 0 8h-6' stroke='%230a0b0a' stroke-width='3.2' fill='none' stroke-linecap='square'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Yellowtail&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   Brand palette read from the reference's own computed styles.
+   Swap the six brand values below and the whole page re-skins.
+   ============================================================ */
+:root{
+  --color-ink:      #0a0b0a;
+  --color-ink-soft: #121413;
+  --color-paper:    #f3f4ec;
+  --color-lime:     #c8f02d;
+  --color-muted:    #8a8f86;
+  --color-dim:      #5f655d;
+  --color-red:      #fb2c36;
+
+  --background:   var(--color-ink);
+  --foreground:   var(--color-paper);
+  --selection-bg: var(--color-lime);
+  --selection-fg: var(--color-ink);
+
+  --font-signature: "Yellowtail", cursive;
+  --font-mono-jb:   "JetBrains Mono";
+  --font-hanken:    "Hanken Grotesk";
+  --font-bricolage: "Bricolage Grotesque";
+
+  --font-body:    var(--font-hanken), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), "Arial Black", sans-serif;
+  --font-mono:    var(--font-mono-jb), ui-monospace, monospace;
+
+  --tracking-tight:  -.03em;
+  --tracking-widest: .28em;
+  --leading-display: .92;
+
+  --radius-pill: 999px;
+  --radius-card: 24px;
+  --ease-out:    cubic-bezier(.2,.8,.25,1);
+
+  --shell:   1152px;
+  --gutter:  24px;
+  --section: 128px;
+}
+
+*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}
+@supports (color: color-mix(in lab, red, red)){
+  *{border-color:color-mix(in oklab, var(--foreground) 12%, transparent)}
+}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;scroll-behavior:smooth}
+body{
+  background:var(--background);
+  color:var(--foreground);
+  font-family:var(--font-body);
+  font-feature-settings:"ss01","cv01";
+  overflow-x:clip;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--selection-bg);color:var(--selection-fg)}
+
+.grain::before{
+  content:"";z-index:60;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  position:fixed;inset:0;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,:before,:after{transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- primitives ---------- */
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:var(--gutter)}
+
+.label{
+  font-family:var(--font-mono);font-size:11.52px;line-height:17.28px;
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-lime);
+}
+.label--ink{color:color-mix(in oklab, var(--color-ink) 55%, transparent)}
+.label--dim{color:var(--color-dim)}
+
+.display,.brand,.svc__title,.stat__value,.card h3,.step h3,.quote blockquote,.marquee--foot span{
+  font-optical-sizing:none;font-variation-settings:"opsz" 12;
+}
+.display{
+  font-family:var(--font-display);font-weight:800;
+  line-height:var(--leading-display);letter-spacing:var(--tracking-tight);
+}
+.lime{color:var(--color-lime)}
+.muted{color:var(--color-muted)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;height:56px;padding-inline:28px;
+  border-radius:var(--radius-pill);font-size:15px;font-weight:500;letter-spacing:-.01em;
+  transition:transform 260ms var(--ease-out), background-color 260ms var(--ease-out),
+             color 260ms var(--ease-out), border-color 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn:focus-visible{outline:2px solid var(--color-lime);outline-offset:3px}
+.btn .arw{transition:transform 260ms var(--ease-out)}
+.btn:hover .arw{transform:translate(3px,-3px)}
+
+.btn--lime{background:var(--color-lime);color:var(--color-ink);box-shadow:0 8px 28px -12px rgba(200,240,45,.55)}
+.btn--lime:hover{box-shadow:0 16px 36px -14px rgba(200,240,45,.7)}
+.btn--ghost{border:1px solid rgba(243,244,236,.15);background:rgba(243,244,236,.04);color:var(--color-paper)}
+.btn--ghost:hover{background:rgba(243,244,236,.09);border-color:rgba(243,244,236,.28)}
+.btn--ink{background:var(--color-ink);color:var(--color-paper);box-shadow:0 10px 30px -14px rgba(10,11,10,.8)}
+.btn--ink-ghost{border:1px solid rgba(10,11,10,.25);color:var(--color-ink)}
+.btn--ink-ghost:hover{background:rgba(10,11,10,.07);border-color:rgba(10,11,10,.45)}
+.btn--sm{height:44px;padding-inline:20px;font-size:14px}
+
+/* ---------- header ---------- */
+.site-header{position:absolute;inset:0 0 auto;z-index:50;padding:16px 16px 0}
+.site-header__bar{
+  max-width:var(--shell);margin-inline:auto;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding-left:20px;padding-right:8px;
+  border:1px solid rgba(243,244,236,.10);border-radius:var(--radius-pill);
+  background:rgba(18,20,19,.62);backdrop-filter:blur(14px);
+  box-shadow:0 18px 40px -28px rgba(0,0,0,.9);
+}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:-.02em}
+.brand__mark{width:32px;height:32px;border-radius:9px;display:block}
+.site-nav{display:flex;align-items:center;gap:2px}
+.site-nav a{
+  font-size:14px;letter-spacing:-.025em;color:rgba(243,244,236,.7);
+  padding:8px 16px;border-radius:var(--radius-pill);
+  transition:color 220ms var(--ease-out), background-color 220ms var(--ease-out);
+}
+.site-nav a:hover{color:var(--color-paper);background:rgba(243,244,236,.07)}
+.site-nav a:focus-visible{outline:2px solid var(--color-lime);outline-offset:2px}
+.nav-toggle{display:none}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:112px;overflow:hidden;background:var(--color-ink);
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(60% 45% at 18% 32%, rgba(200,240,45,.07), transparent 70%),
+    radial-gradient(45% 40% at 82% 62%, rgba(251,44,54,.06), transparent 72%),
+    radial-gradient(120% 90% at 50% 0%, rgba(243,244,236,.04), transparent 65%);
+}
+.hero > *{position:relative;z-index:1}
+
+.badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 16px;border-radius:var(--radius-pill);
+  border:1px solid rgba(243,244,236,.12);background:rgba(243,244,236,.045);
+  font-family:var(--font-mono);font-size:12px;line-height:16px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(243,244,236,.7);
+}
+.badge__dot{width:7px;height:7px;border-radius:50%;background:var(--color-lime);box-shadow:0 0 10px 2px rgba(200,240,45,.6)}
+
+.hero__headline{position:relative;margin-top:26px;max-width:1060px}
+.hero__headline h1{font-size:clamp(52px,10.9vw,158.4px)}
+.signature{
+  position:absolute;right:18px;bottom:-56px;
+  font-family:var(--font-signature);font-weight:400;
+  font-size:clamp(26px,3.9vw,56px);line-height:1;color:var(--color-red);
+  transform:rotate(-9deg);white-space:nowrap;
+  text-shadow:0 0 18px rgba(251,44,54,.55), 0 0 48px rgba(251,44,54,.3);
+}
+.hero__lead{margin-top:56px;max-width:576px;font-size:20px;line-height:28px;color:rgba(243,244,236,.7)}
+.hero__actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:16px}
+.hero__scroll{
+  max-width:var(--shell);margin:64px auto 0;padding:0 var(--gutter) 40px;width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-mono);font-size:12px;line-height:16px;letter-spacing:.1em;
+  color:rgba(243,244,236,.4);text-transform:uppercase;
+}
+.hero__scroll .arrow{color:var(--color-lime);font-size:18px;animation:bob 2.4s var(--ease-out) infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---------- statement ---------- */
+.statement{background:var(--color-ink);padding:144px 0;text-align:center}
+.statement h2{font-size:clamp(52px,10.9vw,158.4px)}
+.statement .label{margin-top:40px}
+
+/* ---------- marquee ---------- */
+.marquee{border-block:1px solid rgba(243,244,236,.10);background:var(--color-ink);padding:20px 0;overflow:hidden}
+.marquee__track{display:flex;width:max-content;animation:slide 34s linear infinite}
+.marquee:hover .marquee__track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.marquee__group{display:flex;align-items:center;flex:0 0 auto}
+.marquee__group span{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(243,244,236,.45);padding-inline:26px;white-space:nowrap;
+}
+.marquee__group i{color:var(--color-lime);font-style:normal;font-size:12px}
+
+.marquee--foot{background:var(--color-ink);padding:24px 0}
+.marquee--foot .marquee__track{animation-duration:44s;animation-direction:reverse}
+.marquee--foot span{font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:var(--tracking-tight);text-transform:none;color:rgba(243,244,236,.22);padding-inline:22px}
+.marquee--foot i{font-size:20px}
+
+/* ---------- what we do ---------- */
+.about{background:var(--color-ink);padding:128px 0}
+.about h2{font-size:clamp(38px,5vw,72px);max-width:860px;margin-top:20px}
+.stats{margin-top:64px;border-top:1px solid rgba(243,244,236,.10);padding-top:48px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat__value{font-family:var(--font-display);font-weight:800;font-size:60px;line-height:1.2;letter-spacing:var(--tracking-tight);color:var(--color-lime)}
+.stat__label{font-size:14px;line-height:20px;color:var(--color-muted);margin-top:4px}
+
+/* ---------- services ---------- */
+.services{background:var(--color-ink);padding-bottom:32px}
+.services__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding-bottom:40px}
+.services__head h2{font-size:clamp(44px,7.5vw,108px);margin-top:18px}
+.svc-list{border-top:1px solid rgba(243,244,236,.08)}
+.svc{
+  display:grid;grid-template-columns:16px 1fr 320px 16px;align-items:center;gap:40px;
+  padding:36px 24px;border-bottom:1px solid rgba(243,244,236,.08);
+  transition:background-color 300ms var(--ease-out);
+}
+.svc:hover,.svc:focus-visible{background:var(--color-ink-soft);outline:none}
+.svc__num{font-family:var(--font-mono);font-size:14px;line-height:20px;color:var(--color-muted)}
+.svc__title{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4.2vw,60px);
+  line-height:var(--leading-display);letter-spacing:var(--tracking-tight);
+  transition:color 300ms var(--ease-out)}
+.svc:hover .svc__title{color:var(--color-lime)}
+.svc__desc{font-size:14px;line-height:20px;color:var(--color-muted)}
+.svc--feature .svc__num,.svc--feature .svc__title{color:var(--color-lime)}
+.svc--feature .svc__desc{color:rgba(243,244,236,.75)}
+.svc__arrow{justify-self:end;font-size:22px;color:var(--color-paper);transition:transform 300ms var(--ease-out),color 300ms var(--ease-out)}
+.svc:hover .svc__arrow{transform:translate(4px,-4px);color:var(--color-lime)}
+
+/* ---------- approach (paper) ---------- */
+.approach{background:var(--color-paper);color:var(--color-ink);padding:128px 0}
+.approach__grid{display:grid;grid-template-columns:47.3% 52.7%;gap:0}
+.approach h2{font-size:clamp(44px,7.5vw,108px);margin-top:18px}
+.approach__lead{margin-top:28px;max-width:400px;font-size:16px;line-height:24px;color:rgba(10,11,10,.7)}
+.approach .btn--lime{margin-top:32px;box-shadow:0 10px 30px -14px rgba(10,11,10,.45)}
+.steps{display:flex;flex-direction:column;gap:68px;padding-top:36px}
+.step{display:grid;grid-template-columns:42px 1fr;align-items:start}
+.step__num{font-family:var(--font-mono);font-size:12px;line-height:28px;color:rgba(10,11,10,.4)}
+.step h3{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:var(--leading-display);letter-spacing:var(--tracking-tight)}
+.step p{margin-top:10px;font-size:16px;line-height:24px;color:rgba(10,11,10,.68);max-width:440px}
+
+/* ---------- work ---------- */
+.work{background:var(--color-ink);padding:128px 0}
+.work__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.work__head h2{font-size:clamp(44px,7.5vw,108px);margin-top:18px}
+.work__grid{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{
+  position:relative;display:block;border-radius:var(--radius-card);overflow:hidden;
+  border:1px solid rgba(243,244,236,.10);background:var(--color-ink-soft);
+  transition:transform 400ms var(--ease-out),border-color 400ms var(--ease-out),box-shadow 400ms var(--ease-out);
+}
+.card:hover{transform:translateY(-6px);border-color:rgba(243,244,236,.24);box-shadow:0 30px 60px -30px rgba(0,0,0,.9)}
+.card:focus-visible{outline:2px solid var(--color-lime);outline-offset:3px}
+.card__media{position:relative;height:270px;overflow:hidden}
+.card__media img{width:100%;height:100%;object-fit:cover;transition:transform 600ms var(--ease-out)}
+.card:hover .card__media img{transform:scale(1.05)}
+.card__tint{position:absolute;inset:0;mix-blend-mode:multiply;opacity:.55}
+.card__shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,10,.92) 0%,rgba(10,11,10,.45) 42%,rgba(10,11,10,.08) 100%)}
+.card__top{position:absolute;top:24px;left:24px;right:24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pill{
+  font-family:var(--font-mono);font-size:12px;line-height:16px;letter-spacing:.1em;
+  padding:4px 12px;border-radius:var(--radius-pill);background:rgba(10,11,10,.6);color:var(--color-paper);
+  backdrop-filter:blur(6px);
+}
+.card__year{font-family:var(--font-mono);font-size:12px;color:rgba(243,244,236,.6)}
+.card__foot{position:absolute;left:24px;right:24px;bottom:24px}
+.card h3{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:var(--leading-display);letter-spacing:var(--tracking-tight);max-width:210px}
+.card__url{margin-top:8px;font-family:var(--font-mono);font-size:12px;line-height:16px;color:rgba(243,244,236,.6)}
+.card__arrow{
+  position:absolute;right:24px;bottom:24px;width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;font-size:18px;color:var(--color-paper);
+  transition:transform 400ms var(--ease-out);
+}
+.card:hover .card__arrow{transform:translate(3px,-3px) rotate(45deg)}
+.card__tags{display:flex;flex-wrap:wrap;gap:8px;background:var(--color-ink-soft);padding:18px}
+.tag{font-size:13px;line-height:18px;padding:3px 12px;border-radius:var(--radius-pill);
+  border:1px solid rgba(243,244,236,.14);color:rgba(243,244,236,.8)}
+
+/* ---------- testimonial ---------- */
+.quote{background:var(--color-ink-soft);border-block:1px solid rgba(243,244,236,.10);padding:var(--section) 0;text-align:center}
+.quote blockquote{
+  font-family:var(--font-display);font-weight:800;font-size:clamp(28px,3.4vw,45px);
+  line-height:1.12;letter-spacing:var(--tracking-tight);max-width:900px;margin:36px auto 0;
+}
+.quote__name{margin-top:36px;font-size:16px;font-weight:500}
+.quote__role{margin-top:4px;font-size:14px;color:var(--color-muted)}
+
+/* ---------- cta ---------- */
+.cta{position:relative;overflow:hidden;background:var(--color-lime);color:var(--color-ink);padding:112px 0}
+.cta__blob{position:absolute;top:-40px;right:-40px;width:340px;height:340px;opacity:.5;pointer-events:none}
+.cta > .shell{position:relative;z-index:1}
+.cta h2{font-size:clamp(44px,7.5vw,108px);max-width:900px;margin-top:18px}
+.cta__row{margin-top:48px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.cta__row p{max-width:480px;font-size:18px;line-height:28px;color:rgba(10,11,10,.75)}
+.cta__actions{display:flex;gap:16px;flex-wrap:wrap}
+
+/* ---------- footer ---------- */
+.site-footer{background:var(--color-ink);padding:64px 0 40px}
+.footer__grid{display:grid;grid-template-columns:300fr 217fr 217fr 250fr;gap:40px}
+.footer__desc{margin-top:20px;max-width:292px;font-size:14px;line-height:20px;color:var(--color-muted)}
+.footer__col h4{margin-bottom:20px}
+.footer__col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer__col a{font-size:14px;line-height:20px;color:rgba(243,244,236,.8);
+  transition:color 220ms var(--ease-out)}
+.footer__col a:hover{color:var(--color-lime)}
+.footer__col a:focus-visible{outline:2px solid var(--color-lime);outline-offset:3px;border-radius:2px}
+.contact li{display:flex;align-items:center;gap:12px;font-size:14px;line-height:20px;color:rgba(243,244,236,.8)}
+.contact svg{flex:0 0 auto;color:var(--color-lime)}
+.footer__bottom{
+  margin-top:64px;padding-top:24px;border-top:1px solid rgba(243,244,236,.10);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.footer__bottom p{font-size:14px;color:var(--color-muted)}
+.footer__bottom span{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--color-muted)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 700ms var(--ease-out),transform 700ms var(--ease-out)}
+.reveal.is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none}}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .svc{grid-template-columns:44px 1fr 40px}
+  .svc__desc{display:none}
+  .footer__grid{grid-template-columns:1fr 1fr;gap:48px}
+  .work__grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:900px){
+  :root{--section:88px}
+  .site-nav{display:none}
+  .nav-toggle{display:inline-flex}
+  .approach__grid{grid-template-columns:1fr;gap:8px}
+  .steps{padding-top:8px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:36px 24px}
+  .statement{padding:96px 0}
+  .services__head,.work__head{flex-direction:column;align-items:flex-start;gap:24px}
+}
+@media (max-width:640px){
+  .work__grid{grid-template-columns:1fr}
+  .hero__lead{margin-top:44px;font-size:18px}
+  .svc{padding:26px 20px;gap:16px}
+  .cta__row{flex-direction:column;align-items:flex-start}
+  .signature{right:auto;left:2px;bottom:-40px}
+  .marquee--foot span{font-size:22px}
+}
+</style>
+</head>
+
+<body class="grain">
+
+<header class="site-header">
+  <div class="site-header__bar">
+    <a class="brand" href="#top" aria-label="Nexten — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#c8f02d"/><path d="M11 23V9h6a4 4 0 0 1 0 8h-6" stroke="#0a0b0a" stroke-width="3.2" fill="none" stroke-linecap="square"/></svg>
+      Nexten
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#community">Community</a>
+      <a href="#approach">About</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#insights">Insights</a>
+    </nav>
+    <a class="btn btn--lime btn--sm" href="#contact">Book a call <span class="arw" aria-hidden="true">↗</span></a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="shell">
+      <p class="badge"><span class="badge__dot" aria-hidden="true"></span> Illinois digital agency</p>
+
+      <div class="hero__headline">
+        <h1 class="display">Empowering your<br><span class="lime">digital future</span></h1>
+        <span class="signature" aria-hidden="true">Nexten</span>
+      </div>
+
+      <p class="hero__lead">Nexten helps businesses grow through websites, mobile apps, marketing, SEO, automation, and innovative technology solutions.</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--lime" href="#contact">Book consultation <span class="arw" aria-hidden="true">↗</span></a>
+        <a class="btn btn--ghost" href="#services">View services</a>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <span>Scroll to explore</span>
+      <span class="arrow" aria-hidden="true">↓</span>
+    </div>
+  </section>
+
+  <!-- ============ STATEMENT ============ -->
+  <section class="statement">
+    <div class="shell">
+      <h2 class="display">Let&rsquo;s <span class="lime">build</span></h2>
+      <p class="label">( Where ambition meets execution )</p>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <div class="marquee__group">
+        <span>Next.js</span><i>✦</i><span>FlutterFlow</span><i>✦</i><span>Google Ads</span><i>✦</i><span>Meta Ads</span><i>✦</i><span>SEO</span><i>✦</i><span>HubSpot</span><i>✦</i><span>Tailwind CSS</span><i>✦</i><span>AI Automation</span><i>✦</i>
+      </div>
+      <div class="marquee__group">
+        <span>Next.js</span><i>✦</i><span>FlutterFlow</span><i>✦</i><span>Google Ads</span><i>✦</i><span>Meta Ads</span><i>✦</i><span>SEO</span><i>✦</i><span>HubSpot</span><i>✦</i><span>Tailwind CSS</span><i>✦</i><span>AI Automation</span><i>✦</i>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ WHAT WE DO ============ -->
+  <section class="about" id="insights">
+    <div class="shell reveal">
+      <p class="label">( What we do )</p>
+      <h2 class="display">We build the websites, apps, and growth systems behind ambitious Illinois brands.</h2>
+
+      <div class="stats">
+        <div class="stat"><div class="stat__value">10+</div><div class="stat__label">Projects delivered</div></div>
+        <div class="stat"><div class="stat__value">95+</div><div class="stat__label">Avg. Lighthouse score</div></div>
+        <div class="stat"><div class="stat__value">4.9/5</div><div class="stat__label">Client satisfaction</div></div>
+        <div class="stat"><div class="stat__value">3yrs</div><div class="stat__label">Driving US growth</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="services" id="services">
+    <div class="shell services__head reveal">
+      <div>
+        <p class="label">( Services )</p>
+        <h2 class="display">Full-stack<br>digital growth</h2>
+      </div>
+      <a class="btn btn--ghost" href="#services">All services</a>
+    </div>
+
+    <div class="svc-list">
+      <a class="svc" href="#services">
+        <span class="svc__num">01</span>
+        <span class="svc__title">Website Development</span>
+        <span class="svc__desc">Fast, responsive, SEO-friendly websites engineered to turn visitors into customers.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">02</span>
+        <span class="svc__title">Mobile App Development</span>
+        <span class="svc__desc">FlutterFlow-powered Android and iOS applications that scale with your business.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">03</span>
+        <span class="svc__title">SEO Services</span>
+        <span class="svc__desc">Improve search rankings, increase visibility, and generate qualified leads.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">04</span>
+        <span class="svc__title">Digital Marketing</span>
+        <span class="svc__desc">Data-driven campaigns across Google, Facebook, Instagram, LinkedIn, and YouTube.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">05</span>
+        <span class="svc__title">Paid Advertising</span>
+        <span class="svc__desc">Google Ads and Meta Ads management focused relentlessly on ROI.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">06</span>
+        <span class="svc__title">Email Marketing</span>
+        <span class="svc__desc">Automation, customer journeys, lead nurturing, and CRM integration.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">07</span>
+        <span class="svc__title">Branding &amp; Strategy</span>
+        <span class="svc__desc">Brand identity, positioning, digital strategy, and growth planning.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc" href="#services">
+        <span class="svc__num">08</span>
+        <span class="svc__title">UI/UX Design</span>
+        <span class="svc__desc">Modern user experiences and intuitive interface design.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="svc svc--feature" id="community" href="#community">
+        <span class="svc__num">09</span>
+        <span class="svc__title">AI Automation Society</span>
+        <span class="svc__desc">Our private digital marketing and AI automation community — playbooks, live builds, and peer support.</span>
+        <span class="svc__arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ APPROACH ============ -->
+  <section class="approach" id="approach">
+    <div class="shell approach__grid reveal">
+      <div>
+        <p class="label label--ink">( The approach )</p>
+        <h2 class="display">How we<br>drive growth</h2>
+        <p class="approach__lead">A proven process that turns marketing from a cost centre into your most reliable growth engine.</p>
+        <a class="btn btn--lime" href="#contact">About the team <span class="arw" aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step__num">01</span>
+          <div>
+            <h3>Strategy first</h3>
+            <p>We start with your business goals, not a template. Every decision traces back to a number that matters.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__num">02</span>
+          <div>
+            <h3>Designed to convert</h3>
+            <p>Beautiful is table stakes. We engineer experiences that turn attention into action and visitors into customers.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__num">03</span>
+          <div>
+            <h3>Built to last</h3>
+            <p>Fast, accessible, maintainable code on modern frameworks &mdash; so your investment keeps performing for years.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__num">04</span>
+          <div>
+            <h3>Optimised forever</h3>
+            <p>Launch is the starting line. We test, measure, and refine so your results compound month over month.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section class="work" id="work">
+    <div class="shell">
+      <div class="work__head reveal">
+        <div>
+          <p class="label">( Selected work )</p>
+          <h2 class="display">Proof, not<br>promises</h2>
+        </div>
+        <a class="btn btn--ghost" href="#work">View all work</a>
+      </div>
+
+      <div class="work__grid reveal">
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/1b2a24/f3f4ec?text=Project+One" alt="Client project one" loading="lazy">
+            <div class="card__tint" style="background:#22d3ee"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Immigration Services</span><span class="card__year">2024</span></div>
+            <div class="card__foot"><h3>Client Project One</h3><p class="card__url">clientproject-one.example</p></div>
+            <span class="card__arrow" style="background:#22d3ee;color:#0a0b0a" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">Website Development</span><span class="tag">Mobile App Development</span><span class="tag">Lead Generation</span></div>
+        </a>
+
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/23202e/f3f4ec?text=Project+Two" alt="Client project two" loading="lazy">
+            <div class="card__tint" style="background:#8b5cf6"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Financial Services</span><span class="card__year">2025</span></div>
+            <div class="card__foot"><h3>Client Project Two</h3><p class="card__url">clientproject-two.example</p></div>
+            <span class="card__arrow" style="background:#8b5cf6;color:#f3f4ec" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">UI/UX Design</span><span class="tag">Website Development</span><span class="tag">SEO Services</span></div>
+        </a>
+
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/2e2415/f3f4ec?text=Project+Three" alt="Client project three" loading="lazy">
+            <div class="card__tint" style="background:#f59e0b"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Accounting</span><span class="card__year">2025</span></div>
+            <div class="card__foot"><h3>Client Project Three</h3><p class="card__url">clientproject-three.example</p></div>
+            <span class="card__arrow" style="background:#f59e0b;color:#0a0b0a" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">Website Development</span><span class="tag">SEO Services</span><span class="tag">Branding &amp; Strategy</span></div>
+        </a>
+
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/15291f/f3f4ec?text=Project+Four" alt="Client project four" loading="lazy">
+            <div class="card__tint" style="background:#10b981"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Immigration Services</span><span class="card__year">2025</span></div>
+            <div class="card__foot"><h3>Client Project Four</h3><p class="card__url">clientproject-four.example</p></div>
+            <span class="card__arrow" style="background:#10b981;color:#0a0b0a" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">Website Development</span><span class="tag">Digital Marketing</span><span class="tag">Paid Advertising</span></div>
+        </a>
+
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/2e1a1a/f3f4ec?text=Project+Five" alt="Client project five" loading="lazy">
+            <div class="card__tint" style="background:#ef4444"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Financial Services</span><span class="card__year">2025</span></div>
+            <div class="card__foot"><h3>Client Project Five</h3><p class="card__url">clientproject-five.example</p></div>
+            <span class="card__arrow" style="background:#ef4444;color:#f3f4ec" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">Paid Advertising</span><span class="tag">Digital Marketing</span><span class="tag">Lead Generation</span></div>
+        </a>
+
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/16233a/f3f4ec?text=Project+Six" alt="Client project six" loading="lazy">
+            <div class="card__tint" style="background:#3b82f6"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Financial Services</span><span class="card__year">2026</span></div>
+            <div class="card__foot"><h3>Client Project Six</h3><p class="card__url">clientproject-six.example</p></div>
+            <span class="card__arrow" style="background:#3b82f6;color:#f3f4ec" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">Digital Marketing</span><span class="tag">Paid Advertising</span><span class="tag">Branding &amp; Strategy</span></div>
+        </a>
+
+        <a class="card" href="#work">
+          <div class="card__media">
+            <img src="https://placehold.co/704x540/1d2a17/f3f4ec?text=Project+Seven" alt="Client project seven" loading="lazy">
+            <div class="card__tint" style="background:#84cc16"></div>
+            <div class="card__shade"></div>
+            <div class="card__top"><span class="pill">Health &amp; Wellness</span><span class="card__year">2026</span></div>
+            <div class="card__foot"><h3>Client Project Seven</h3><p class="card__url">clientproject-seven.example</p></div>
+            <span class="card__arrow" style="background:#84cc16;color:#0a0b0a" aria-hidden="true">↗</span>
+          </div>
+          <div class="card__tags"><span class="tag">Website Development</span><span class="tag">SEO Services</span><span class="tag">Digital Marketing</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIAL ============ -->
+  <section class="quote">
+    <div class="shell reveal">
+      <p class="label">( What clients say )</p>
+      <blockquote>&ldquo;Nexten didn&rsquo;t just give us a website &mdash; they built the engine that runs our business.&rdquo;</blockquote>
+      <p class="quote__name">Client Name</p>
+      <p class="quote__role">Director, Client Company</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta" id="contact">
+    <svg class="cta__blob" viewBox="0 0 32 32" aria-hidden="true"><path d="M11 23V9h6a4 4 0 0 1 0 8h-6" stroke="#0a0b0a" stroke-opacity=".07" stroke-width="3.2" fill="none" stroke-linecap="square"/></svg>
+    <div class="shell">
+      <p class="label label--ink">Start the conversation</p>
+      <h2 class="display">Let's build your digital future.</h2>
+      <div class="cta__row">
+        <p>Book a free, no-pressure consultation. We&rsquo;ll show you exactly where the biggest growth opportunities are.</p>
+        <div class="cta__actions">
+          <a class="btn btn--ink" href="#contact">Book consultation <span class="arw" aria-hidden="true">↗</span></a>
+          <a class="btn btn--ink-ghost" href="#services">View services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER MARQUEE ============ -->
+<div class="marquee marquee--foot" aria-hidden="true">
+  <div class="marquee__track">
+    <div class="marquee__group">
+      <span>Website Development</span><i>✦</i><span>Mobile Apps</span><i>✦</i><span>SEO</span><i>✦</i><span>Paid Ads</span><i>✦</i><span>Branding</span><i>✦</i><span>UI/UX Design</span><i>✦</i>
+    </div>
+    <div class="marquee__group">
+      <span>Website Development</span><i>✦</i><span>Mobile Apps</span><i>✦</i><span>SEO</span><i>✦</i><span>Paid Ads</span><i>✦</i><span>Branding</span><i>✦</i><span>UI/UX Design</span><i>✦</i>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" id="pricing">
+  <div class="shell">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="#top">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#c8f02d"/><path d="M11 23V9h6a4 4 0 0 1 0 8h-6" stroke="#0a0b0a" stroke-width="3.2" fill="none" stroke-linecap="square"/></svg>
+          Nexten
+        </a>
+        <p class="footer__desc">Smarter digital marketing. Better results. An Illinois digital agency building websites, apps, and growth systems.</p>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="label label--dim">Pages</h4>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#approach">About</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#insights">Insights</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="label label--dim">Services</h4>
+        <ul>
+          <li><a href="#services">Website Development</a></li>
+          <li><a href="#services">Mobile App Development</a></li>
+          <li><a href="#services">SEO Services</a></li>
+          <li><a href="#services">Digital Marketing</a></li>
+          <li><a href="#services">Paid Advertising</a></li>
+          <li><a href="#services">Email Marketing</a></li>
+          <li><a href="#community">AI Automation Society</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="label label--dim">Get in touch</h4>
+        <ul class="contact">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> hello@nexten.com</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.8 2.1Z"/></svg> +1 (000) 000-0000</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Illinois, United States</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; 2026 Nexten. All rights reserved.</p>
+      <span>Smarter digital marketing &mdash; better results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(el => el.classList.add('is-in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    }
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+  items.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "description": "site (localhost:3002)",
+  "scripts": {
+    "serve": "node site/serve.mjs",
+    "shot": "node screenshot.mjs http://localhost:3002"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "puppeteer": "^25.9.0"
+  }
+}
